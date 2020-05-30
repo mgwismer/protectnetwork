@@ -1,24 +1,21 @@
 import React from 'react';
-import logo from './logo.svg';
+import {
+  HashRouter as Router,
+  Route
+} from 'react-router-dom'
 import './App.css';
+import { FrontPage } from './components/front-page/front-page';
+import { NewPearl } from './components/new-pearl-page/new-pearl-page';
+import { ExistingPearl } from './components/existing-pearl/existing-pearl';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+      <Router>
+        <Route exact path={'/'} component={FrontPage} />
+        <Route exact path={'/NewPearl'} component={NewPearl} />
+        <Route exact path={'/ExistingPearl'} component={ExistingPearl} />
+      </Router>
     </div>
   );
 }
