@@ -3,20 +3,29 @@ import {
   HashRouter as Router,
   Route
 } from 'react-router-dom'
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
 import './App.css';
+import { rootReducer, InitialState } from './redux/reducer';
 import { FrontPage } from './components/front-page/front-page';
-import { NewPearl } from './components/new-pearl-page/new-pearl-page';
-import { ExistingPearl } from './components/existing-pearl/existing-pearl';
+import { NewResident } from './components/new-resident-page/new-resident-page';
+import { ExistingResident} from './components/add-contact-to-resident/add-contact-to-resident';
+import { NewContact } from './components/new-contact-page/new-contact-page';
+
+export const store = createStore(rootReducer, InitialState);
 
 function App() {
   return (
-    <div className='App'>
-      <Router>
-        <Route exact path={'/'} component={FrontPage} />
-        <Route exact path={'/NewPearl'} component={NewPearl} />
-        <Route exact path={'/ExistingPearl'} component={ExistingPearl} />
-      </Router>
-    </div>
+    <Provider store={store}>
+      <div className='App'>
+        <Router>
+          <Route exact path={'/'} component={FrontPage} />
+          <Route path={'/NewResident'} component={NewResident} />
+          <Route path={'/NewContact'} component={NewContact} />
+          <Route path={'/ExistingResident'} component={ExistingResident} />
+        </Router>
+      </div>
+    </Provider>
   );
 }
 

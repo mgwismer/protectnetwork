@@ -17,11 +17,16 @@ export const FrontPage: React.FC = () => {
             <div className='frontpage-buttons'>
             <button className='frontpage-buttons__create'>
                 <NavLink to={'/NewPearl'} style={{color: 'black', textDecoration: 'none', border: '0px'}}>
-                    <div>Create New Pearl</div>
+                    <div>Create New Resident</div>
+                </NavLink>
+            </button>
+            <button className='frontpage-buttons__create'>
+                <NavLink to={'/NewContact'} style={{color: 'black', textDecoration: 'none', border: '0px'}}>
+                    <div>Create New Contact</div>
                 </NavLink>
             </button>
             <button className='frontpage-buttons__add'>
-                <NavLink to={'/ExistingPearl'} style={{color: 'black', textDecoration: 'none', border: '0px'}}>
+                <NavLink to={'/AddContactToResident'} style={{color: 'black', textDecoration: 'none', border: '0px'}}>
                    Add for existing Pearl
                 </NavLink>
             </button>
