@@ -1,5 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { addContact } from '../../redux/actions';
+import { NavLink } from 'react-router-dom';
+import { store } from '../../App';
 
 export const NewContact: React.FC = () => {
         const [nameValue, setNameValue] = useState('');
@@ -14,7 +16,7 @@ export const NewContact: React.FC = () => {
                 residentContactIDs: [],
                 firstContacts: []
             }
-            addContact(contact);
+            store.dispatch(addContact(contact));
             setNameValue('');
             setEmailValue('');
             setPhoneNumber('');
@@ -64,6 +66,11 @@ export const NewContact: React.FC = () => {
                     </div>
                 </form>
             </div>     
+            <button className='new-resident-home'>
+                <NavLink to={'/'} style={{color: 'black', textDecoration: 'none', border: '0px'}}>
+                    Back to Home
+                </NavLink>
+            </button>
         </React.Fragment>
     )
 }

@@ -1,6 +1,8 @@
 import React, { useCallback, useState } from 'react';
 import './new-resident-page.scss';
 import { addResident } from '../../redux/actions';
+import { NavLink } from 'react-router-dom';
+import { store } from '../../App';
 
 export const NewResident: React.FC = () => {
     const [nameValue, setNameValue] = useState('');
@@ -9,17 +11,17 @@ export const NewResident: React.FC = () => {
     const [emergencyContactNumber, setEmergencyContactNumber] = useState('');
     const handleSubmit = useCallback((e) => {
         e.preventDefault();
-        const residentID = Date.now().toString();
-        console.log('submit', nameValue, residence, emergencyContactName, emergencyContactNumber, residentID)
+        const id = Date.now().toString();
+        console.log('submit', nameValue, residence, emergencyContactName, emergencyContactNumber, id)
         const resident = {
-            residentID,
+            id,
             residence,
             name: nameValue,
             emergencyContactName,
             emergencyContactNumber,
             firstContacts: []
         }
-        addResident(resident);
+        store.dispatch(addResident(resident));
         setNameValue('');
         setResidence('');
         setEmergencyContactName('');
@@ -82,6 +84,11 @@ export const NewResident: React.FC = () => {
                     </div>
                 </form>
             </div>     
+            <button className='new-resident-home'>
+                <NavLink to={'/'} style={{color: 'black', textDecoration: 'none', border: '0px'}}>
+                    Back to Home
+                </NavLink>
+            </button>
         </React.Fragment>
 
     )

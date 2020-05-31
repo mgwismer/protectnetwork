@@ -1,7 +1,5 @@
 import { ReduxActionTypes } from './action-types';
 import { ResidentType, ContactType } from '../models/data-models';
-import { string } from 'prop-types';
-import { ReactReduxContext } from 'react-redux';
 
 export interface AppState {
     residents: Array<ResidentType>;
@@ -25,7 +23,7 @@ interface ReduxAddContact extends ReduxBaseAction {
 
 interface ReduxAddContactToResident extends ReduxBaseAction {
     type: ReduxActionTypes.ADD_CONTACT_TO_RESIDENT;
-    data: { residentID: string, contactID: string };
+    data: { id: string, contactID: string };
 }
 
 export type ReduxActions = ReduxAddResident | ReduxAddContact | ReduxAddContactToResident;
@@ -40,9 +38,12 @@ export function rootReducer(
     state: AppState = InitialState,
     action: ReduxActions,
 ): AppState {
+    console.log('rootReducer', action)
     switch(action.type) {
         case ReduxActionTypes.ADD_RESIDENT:
-            return {...state, residents: [...state.residents, action.data]}
+            const newResidents = [...state.residents, action.data];
+            console.log('new resi', newResidents);
+            return {...state, residents: newResidents}
         case ReduxActionTypes.ADD_CONTACT:
             return {...state, contacts: [...state.contacts, action.data]}
         case ReduxActionTypes.ADD_CONTACT_TO_RESIDENT:

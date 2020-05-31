@@ -7,9 +7,9 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import './App.css';
 import { rootReducer, InitialState } from './redux/reducer';
-import { FrontPage } from './components/front-page/front-page';
+import FrontPage from './components/front-page/front-page';
 import { NewResident } from './components/new-resident-page/new-resident-page';
-import { ExistingResident} from './components/add-contact-to-resident/add-contact-to-resident';
+import ExistingResident from './components/add-contact-to-resident/add-contact-to-resident';
 import { NewContact } from './components/new-contact-page/new-contact-page';
 
 export const store = createStore(rootReducer, InitialState);

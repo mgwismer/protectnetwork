@@ -1,5 +1,5 @@
 export type ResidentType = {
-    residentID: string;
+    id: string;
     residence: string;
     name: string;
     emergencyContactName: string;
