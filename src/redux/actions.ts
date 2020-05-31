@@ -16,3 +16,10 @@ export function addContact(contactValue: ContactType): ReduxActions {
         data: contactValue
     }
 }
+
+export function addContactToResident(residentId: string, contactEmail: string): ReduxActions {
+    return {
+        type: ReduxActionTypes.ADD_CONTACT_TO_RESIDENT,
+        data: { residentId, contactEmail }
+    }
+}

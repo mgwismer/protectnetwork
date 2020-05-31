@@ -26,8 +26,12 @@ export const FrontPage: React.FC<ContactProps> = ({ residents, contacts }) => {
                     Add for existing Resident
                     </NavLink>
                 </button>}
-                {/* <div className='frontpage-buttons__create' onClick={handleCreateNewPearl}> Create New Pearl </div>
-                <div className='frontpage-buttons__add' onClick={handleAddForExistingPearl}> Add for existing Pearl </div> */}
+            {contacts.length > 1 &&
+                <button className='frontpage-buttons__add'>
+                    <NavLink to={'/'} style={{color: 'black', textDecoration: 'none', border: '0px'}}>
+                    Add Contact to Contact
+                    </NavLink>
+                </button>}
             </div>
         </div>
     )

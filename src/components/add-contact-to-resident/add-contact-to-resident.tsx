@@ -1,10 +1,12 @@
 import React, { useMemo, useState, useCallback } from 'react';
 import { bindActionCreators, Dispatch } from 'redux';
-import { AppState } from '../../redux/reducer';
+import { AppState, ReduxActions } from '../../redux/reducer';
 import { connect } from 'react-redux';
 import Select from 'react-select';
 import './add-contact-to-resident.scss';
-import { ResidentType } from '../../models/data-models';
+import { addContactToResident } from '../../redux/actions';
+import { store } from '../../App';
+import { NavLink } from 'react-router-dom';
 
 const customStyles = {
     option: (provided: any, state: { isSelected: boolean; }) => ({
@@ -50,24 +52,24 @@ export const ExistingResident: React.FC<ContactProps> = ({ residents, contacts }
     const [foundContact, changeFoundContact] = useState('');
     
     const ResidentOptions = useMemo(() => {
-        return residents.map(resident => ({value: resident.id, label: `${resident.name} , ${resident.residence}`}))
+        return residents.map((resident: { id: string; name: any; residence: any; }) => ({value: resident.id, label: `${resident.name} , ${resident.residence}`}))
     }, []);
 
     const handleResidentChange = useCallback((inputTerm) => {
-        console.log('inp', inputTerm)
+        console.log('inp', inputTerm, residents);
         changeResident(inputTerm);
       },[residents]);
 
     const handleResidentSubmit = useCallback(() => {
         console.log('sub', searchResident.value);
         changeFoundResidentId(searchResident.value);
-        const foundResident = residents.filter(resident => searchResident.value === resident.id).map(resident => ({name: resident.name, home: resident.residence}));
+        const foundResident = residents.filter((resident: { id: string; }) => searchResident.value === resident.id).map((resident: { name: string; residence: string; }) => ({name: resident.name, home: resident.residence}));
         console.log('found', foundResident[0]);
         changeFoundResident(foundResident[0])
     }, [searchResident])
 
     const ContactOptions = useMemo(() => {
-        return contacts.map(contact => ({value: contact.email, label: contact.email}));
+        return contacts.map((contact: { email: string; }) => ({value: contact.email, label: contact.email}));
     }, []);
 
     const handleContactChange = useCallback((inputTerm) => {
@@ -81,6 +83,9 @@ export const ExistingResident: React.FC<ContactProps> = ({ residents, contacts }
 
     const handleAddContact = useCallback(() => {
         console.log('handle add', foundResidentId, foundContact);
+        store.dispatch(addContactToResident(foundResidentId, foundContact));
+        changeFoundResidentId('');
+        changeFoundContact('');
     }, [foundResidentId, foundContact])
 
     return (
@@ -125,6 +130,11 @@ export const ExistingResident: React.FC<ContactProps> = ({ residents, contacts }
                     ADD
                 </button>
             </div>}
+            <button className='add-to-resident-home'>
+                <NavLink to={'/'} style={{color: 'black', textDecoration: 'none', border: '0px'}}>
+                    Back to Home
+                </NavLink>
+            </button>
         </div>
     )
 }
@@ -134,6 +144,9 @@ const mapStateToProps = (state: AppState) => ({
     contacts: state.contacts
 })
 
-type ContactProps = ReturnType<typeof mapStateToProps>
+// const mapDispatchToProps = (dispatch: Dispatch<ReduxActions>) =>
+//     bindActionCreators({ addContactToResident }, dispatch);
+
+type ContactProps = ReturnType<typeof mapStateToProps>;
 
 export default connect(mapStateToProps)(ExistingResident)

@@ -23,9 +23,10 @@ interface ReduxAddContact extends ReduxBaseAction {
 
 interface ReduxAddContactToResident extends ReduxBaseAction {
     type: ReduxActionTypes.ADD_CONTACT_TO_RESIDENT;
-    data: { id: string, contactID: string };
+    data: { residentId: string, contactEmail: string };
 }
 
+export type ReduxAddContactAction = ReduxAddContactToResident;
 export type ReduxActions = ReduxAddResident | ReduxAddContact | ReduxAddContactToResident;
 
 export const InitialState: AppState = {
@@ -38,16 +39,18 @@ export function rootReducer(
     state: AppState = InitialState,
     action: ReduxActions,
 ): AppState {
-    console.log('rootReducer', action)
     switch(action.type) {
         case ReduxActionTypes.ADD_RESIDENT:
             const newResidents = [...state.residents, action.data];
-            console.log('new resi', newResidents);
             return {...state, residents: newResidents}
         case ReduxActionTypes.ADD_CONTACT:
             return {...state, contacts: [...state.contacts, action.data]}
         case ReduxActionTypes.ADD_CONTACT_TO_RESIDENT:
-            return {...state}
+            const activeResident = state.residents.findIndex(resident => resident.id === action.data.residentId);
+            const updatedResident = state.residents[activeResident]
+            updatedResident.firstContacts.push(action.data.contactEmail);
+            const newResidentsArray = [...state.residents];
+            return {...state, residents: newResidentsArray}
         default:
             return state;
     }

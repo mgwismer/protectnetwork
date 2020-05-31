@@ -1,4 +1,11 @@
 .frontpage-buttons {
     display: flex;
-    justify-content: space-around;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 30%;
+    width: 30%;
+}
+
+.frontpage-buttons__create {
+    margin: 10px;
 }
