@@ -28,7 +28,7 @@ export const FrontPage: React.FC<ContactProps> = ({ residents, contacts }) => {
                 </button>}
             {contacts.length > 1 &&
                 <button className='frontpage-buttons__add'>
-                    <NavLink to={'/'} style={{color: 'black', textDecoration: 'none', border: '0px'}}>
+                    <NavLink to={'/AddContactToContact'} style={{color: 'black', textDecoration: 'none', border: '0px'}}>
                     Add Contact to Contact
                     </NavLink>
                 </button>}
