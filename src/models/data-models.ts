@@ -1,3 +1,9 @@
+export type FirstContactFieldType = 'name' | 'email' | 'phone' | 'id';
+
+export type FirstContactType = {
+    [key in FirstContactFieldType]: string;
+};
+
 export type ResidentType = {
     id: string;
     residence: string;
@@ -12,5 +18,5 @@ export type ContactType = {
     name: string;
     phone: string;
     email: string;
-    firstContacts: Array<string>;
+    firstContacts: Array<FirstContactType>;
 };

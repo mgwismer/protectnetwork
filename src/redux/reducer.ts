@@ -39,6 +39,7 @@ export function rootReducer(
     state: AppState = InitialState,
     action: ReduxActions,
 ): AppState {
+    console.log('REDUCER', action);
     switch(action.type) {
         case ReduxActionTypes.ADD_RESIDENT:
             const newResidents = [...state.residents, action.data];

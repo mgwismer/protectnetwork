@@ -33,6 +33,13 @@ export const FrontPage: React.FC<ContactProps> = ({ residents, contacts }) => {
                     </NavLink>
                 </button>}
             </div>
+            <div className='frontpage-footer'>
+                MVP created as part of 
+                <br/>
+                <a href="https://covid19challenge.mit.edu/beat-the-pandemic-2/">MIT Beat the Pandemic II hackathon</a>
+                <br/>
+                Track G
+            </div>
         </div>
     )
 }
