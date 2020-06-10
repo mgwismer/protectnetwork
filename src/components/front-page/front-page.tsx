@@ -16,8 +16,8 @@ export const FrontPage: React.FC<ContactProps> = ({ residents, contacts }) => {
                 </NavLink>
             </button>
             <button className='frontpage-buttons__create'>
-                <NavLink to={'/NewContact'} style={{color: 'black', textDecoration: 'none', border: '0px'}}>
-                    <div>Create New Contact</div>
+                <NavLink to={'/Signup'} style={{color: 'black', textDecoration: 'none', border: '0px'}}>
+                    <div>Create New User</div>
                 </NavLink>
             </button>
             {!!residents.length && !!contacts.length &&
@@ -26,7 +26,7 @@ export const FrontPage: React.FC<ContactProps> = ({ residents, contacts }) => {
                     Add for existing Resident
                     </NavLink>
                 </button>}
-            {contacts.length > 1 &&
+            {Object.keys(contacts).length > 1 &&
                 <button className='frontpage-buttons__add'>
                     <NavLink to={'/AddContactToContact'} style={{color: 'black', textDecoration: 'none', border: '0px'}}>
                     Add Contact to Contact
@@ -48,7 +48,7 @@ const mapStateToProps = (state: AppState) => {
     console.log('state', state);
     return {
         residents: state.residents,
-        contacts: state.contacts
+        contacts: state.users
     }
 }
 

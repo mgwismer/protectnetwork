@@ -90,6 +90,5 @@ export const NewResident: React.FC = () => {
                 </NavLink>
             </button>
         </React.Fragment>
-
     )
 }

@@ -30,7 +30,7 @@ export const NewContact: React.FC = () => {
                 residentContactIDs: [],
                 firstContacts: listOfContacts
             }
-            store.dispatch(addContact(contact));
+            // store.dispatch(addContact(contact));
             setNameValue('');
             setEmailValue('');
             setPhoneNumber('');
@@ -124,12 +124,6 @@ export const NewContact: React.FC = () => {
                             <input type="text" value={phoneNumber} onChange={handlePhoneNumberChange} />
                         </label>
                     </div>
-                    {/* <div className='new-contact-form-input'>
-                        <label>
-                            Add close contact
-                            <input type="text" value={firstContact} onChange={handleFirstContactEmailChange(0)} />
-                        </label>
-                    </div> */}
                     {contactInputs}
                     <div className='new-contact-add-btn'>
                         <input type='submit' value='Add Contact' onClick={handleAddContact}/>

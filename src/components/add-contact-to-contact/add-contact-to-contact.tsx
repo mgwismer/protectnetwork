@@ -12,7 +12,7 @@ export const AddContactToContact: React.FC<ContactProps> = ({ contacts }) => {
 
 const mapStateToProps = (state: AppState) => {
     return {
-        contacts: state.contacts
+        contacts: state.users
     }
 }
 

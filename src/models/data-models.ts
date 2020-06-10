@@ -13,10 +13,11 @@ export type ResidentType = {
     firstContacts: Array<string>;
 };
 
-export type ContactType = {
+export type UserType = {
     residentContactIDs: Array<string>;
     name: string;
     phone: string;
     email: string;
+    password: string;
     firstContacts: Array<FirstContactType>;
 };

@@ -68,8 +68,10 @@ export const ExistingResident: React.FC<ContactProps> = ({ residents, contacts }
         changeFoundResident(foundResident[0])
     }, [searchResident])
 
+    //TODO fix since contacts became an object map
     const ContactOptions = useMemo(() => {
-        return contacts.map((contact: { email: string; }) => ({value: contact.email, label: contact.email}));
+        return [];
+        // return contacts.map((contact: { email: string; }) => ({value: contact.email, label: contact.email}));
     }, []);
 
     const handleContactChange = useCallback((inputTerm) => {
@@ -141,7 +143,7 @@ export const ExistingResident: React.FC<ContactProps> = ({ residents, contacts }
 
 const mapStateToProps = (state: AppState) => ({
     residents: state.residents,
-    contacts: state.contacts
+    contacts: state.users
 })
 
 // const mapDispatchToProps = (dispatch: Dispatch<ReduxActions>) =>
