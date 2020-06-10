@@ -1,5 +1,5 @@
 import { ReduxActionTypes } from './action-types';
-import { ResidentType, UserType } from '../models/data-models';
+import { ResidentType, UserType, FirstContactType } from '../models/data-models';
 import { string } from 'prop-types';
 
 export interface AppState {
@@ -20,7 +20,7 @@ interface ReduxAddResident extends ReduxBaseAction {
 
 interface ReduxAddContact extends ReduxBaseAction {
     type: ReduxActionTypes.ADD_CONTACT;
-    data: UserType;
+    data: { activeUser: string, listOfContacts: Array<FirstContactType>};
 }
 
 interface ReduxAddContactToResident extends ReduxBaseAction {
@@ -57,13 +57,17 @@ export function rootReducer(
     state: AppState = InitialState,
     action: ReduxActions,
 ): AppState {
+    console.log('REDUCER HIT', action);
     switch(action.type) {
         case ReduxActionTypes.ADD_RESIDENT:
             const newResidents = [...state.residents, action.data];
             return {...state, residents: newResidents}
-        //TODO reinsert making contacts an object
-        // case ReduxActionTypes.ADD_CONTACT:
-        //     return {...state, contacts: [...state.contacts, action.data]}
+        case ReduxActionTypes.ADD_CONTACT:
+            const { activeUser, listOfContacts } = action.data;
+            const updatedUser = state.users[activeUser];
+            updatedUser.firstContacts = listOfContacts;
+            console.log('in reducer', updatedUser);
+            return {...state, users: {...state.users, [activeUser]: {...updatedUser}}}
         case ReduxActionTypes.CREATE_USER:
             const newUser = action.data.username;
             const newUsersList = [...state.listOfUsers, newUser];

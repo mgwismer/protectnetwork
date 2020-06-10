@@ -1,6 +1,6 @@
 import { ReduxActionTypes } from './action-types';
 import { ReduxActions } from './reducer';
-import { ResidentType, UserType } from '../models/data-models';
+import { ResidentType, UserType, FirstContactType } from '../models/data-models';
 
 export function addResident(residentValue: ResidentType): ReduxActions {
     console.log('resident action', residentValue);
@@ -10,10 +10,10 @@ export function addResident(residentValue: ResidentType): ReduxActions {
     }
 }
 
-export function addContact(contactValue: UserType): ReduxActions {
+export function addContact(activeUser: string, listOfContacts: Array<FirstContactType>): ReduxActions {
     return {
         type: ReduxActionTypes.ADD_CONTACT,
-        data: contactValue
+        data: { activeUser, listOfContacts }
     }
 }
 

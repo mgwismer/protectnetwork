@@ -1,8 +1,10 @@
-import React, { useCallback, useState, useMemo, ReactEventHandler } from 'react';
+import React, { useCallback, useState, useMemo } from 'react';
 import { addContact } from '../../redux/actions';
 import { NavLink } from 'react-router-dom';
-import { store } from '../../App';
 import { FirstContactType, FirstContactFieldType } from '../../models/data-models';
+import { AppState } from '../../redux/reducer';
+import { Dispatch, AnyAction, bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
 const initialState: FirstContactType = {
     name: '',
@@ -11,44 +13,17 @@ const initialState: FirstContactType = {
     id: '0'
 }
 
-export const NewContact: React.FC = () => {
-        const [nameValue, setNameValue] = useState('');
-        const [emailValue, setEmailValue] = useState('');
-        const [phoneNumber, setPhoneNumber] = useState('');
+export const NewContact: React.FC<ContactProps> = ({ activeUser, addContact }) => {
         const [contactIndex, setContactIndex] = useState('0');
         const [listOfContacts, setListOfContacts] = useState<Array<FirstContactType>>([initialState]);
         const [activeInput, setActiveInput] = useState(0);
         const [contactInputType, setContactInputType] = useState<FirstContactFieldType>('name');
 
         const handleSubmit = useCallback((e) => {
-            console.log('submit', nameValue, listOfContacts)
+            console.log('submit', listOfContacts)
             e.preventDefault();
-            const contact = {
-                name: nameValue,
-                email: emailValue,
-                phone: phoneNumber,
-                residentContactIDs: [],
-                firstContacts: listOfContacts
-            }
-            // store.dispatch(addContact(contact));
-            setNameValue('');
-            setEmailValue('');
-            setPhoneNumber('');
-        }, [nameValue, emailValue, phoneNumber]);
-    
-        const handleNameChange = useCallback((e) => {
-            e.preventDefault();
-            setNameValue(e.target.value);
-        }, []);
-    
-        const handleEmailChange = useCallback((e) => {
-            setEmailValue(e.target.value);
-        }, []);
-    
-        const handlePhoneNumberChange = useCallback((e) => {
-            e.preventDefault();
-            setPhoneNumber(e.target.value);
-        }, []);
+            addContact(activeUser, listOfContacts);
+        }, [listOfContacts]);
     
         const handleFirstContactChange = useCallback((e) => {
             const newArray = [...listOfContacts];
@@ -101,29 +76,9 @@ export const NewContact: React.FC = () => {
 
         return (
         <React.Fragment>
-            <h2> Add new contact </h2>
+            <h2> Add contacts </h2>
             <div className='new-contact-form'>
                 <div>
-                    <div className='new-contact-form-input'>
-                        <label>
-                        Name:
-                        <input type="text" value={nameValue} onChange={handleNameChange} />
-                        </label>
-                    </div>
-                    <br/>
-                    <div className='new-contact-form-input'>
-                        <label>
-                        Email:
-                        <input type="text" value={emailValue} onChange={handleEmailChange} />
-                        </label>
-                    </div>
-                    <br/>
-                    <div className='new-contact-form-input'>
-                        <label>
-                            Phone Number
-                            <input type="text" value={phoneNumber} onChange={handlePhoneNumberChange} />
-                        </label>
-                    </div>
                     {contactInputs}
                     <div className='new-contact-add-btn'>
                         <input type='submit' value='Add Contact' onClick={handleAddContact}/>
@@ -141,3 +96,20 @@ export const NewContact: React.FC = () => {
         </React.Fragment>
     )
 }
+
+
+const mapStateToProps = (state: AppState) => {
+    return {
+        activeUser: state.activeUser
+    }
+}
+
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
+    bindActionCreators({ addContact }, dispatch);
+
+type ContactProps = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(NewContact)

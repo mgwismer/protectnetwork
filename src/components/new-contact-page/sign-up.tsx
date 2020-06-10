@@ -1,18 +1,22 @@
 import React, { useState, useCallback } from 'react';
 import { connect } from 'react-redux';
-import { AppState, ReduxActions } from '../../redux/reducer';
+import { AppState } from '../../redux/reducer';
 import { bindActionCreators, Dispatch, AnyAction } from 'redux';
 import { createUser, makeActiveUser } from '../../redux/actions';
 import { Redirect } from 'react-router';
+import './new-contact-page.scss';
 
 export const SignUp: React.FC<ContactProps> = ({ users, createUser, makeActiveUser }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [nameValue, setNameValue] = useState('');
+    const [emailValue, setEmailValue] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
     const [passwordValid, setPasswordValid] = useState(false);
     const [usernameValid, setUsernameValid] = useState(false);
     const [userSubmitted, setUserSubmitted] = useState(false);
 
-    const handleNameChange = useCallback(e => {
+    const handleUsernameChange = useCallback(e => {
         console.log('users in name change', users);
         setUsername(e.target.value);
         if (!users.includes(e.target.value)) {
@@ -26,43 +30,79 @@ export const SignUp: React.FC<ContactProps> = ({ users, createUser, makeActiveUs
             setPasswordValid(true)
         }
     }, [])
+    
+    const handleNameChange = useCallback((e) => {
+        e.preventDefault();
+        setNameValue(e.target.value);
+    }, []);
+
+    const handleEmailChange = useCallback((e) => {
+        setEmailValue(e.target.value);
+    }, []);
+
+    const handlePhoneNumberChange = useCallback((e) => {
+        e.preventDefault();
+        setPhoneNumber(e.target.value);
+    }, []);
 
     const handleSubmit = useCallback(() => {
         const user = {
             residentContactIDs: [],
-            name: username,
-            phone: '',
-            email: '',
+            username: username,
+            name: nameValue,
+            phone: phoneNumber,
+            email: emailValue,
             password,
             firstContacts: []
         }
         if (usernameValid && passwordValid) {
             createUser(username, user);
             makeActiveUser(username);
+            setNameValue('');
+            setEmailValue('');
+            setPhoneNumber('');
             setUserSubmitted(true);
         } else {
             alert('user name and password must be valid');
         }
-    }, [password, username])
+    }, [password, username, nameValue, emailValue, phoneNumber])
 
     if (userSubmitted) 
         return <Redirect to={'/NewContact'} />
-        
+
     return (
-        <div>
-            <div className='signin-page-username'>
+        <div className='signup-container'>
+            <div className='signup-input'>
                 <label>
                     Username
-                    <input type='text' value={username} onChange={handleNameChange} />
                 </label>
+                <input type='text' value={username} onChange={handleUsernameChange} />
             </div>
-            <div className='signin-page-password'>
+            <div className='signup-input'>
                 <label>
                     password (at least 8 characters)
-                    <input type='text' value={password} onChange={handlePasswordChange} />
                 </label>
+                <input type='text' value={password} onChange={handlePasswordChange} />
             </div>
-            <div className='new-contact-form-submit'>
+            <div className='signup-input'>
+                <label>
+                    Name:
+                </label>
+                <input type="text" value={nameValue} onChange={handleNameChange} />
+            </div>
+            <div className='signup-input'>
+                <label>
+                Email:
+                </label>
+                <input type="text" value={emailValue} onChange={handleEmailChange} />
+            </div>
+            <div className='signup-input'>
+                <label>
+                    Phone Number
+                </label>
+                <input type="text" value={phoneNumber} onChange={handlePhoneNumberChange} />
+            </div>
+            <div className='signup-submit'>
                 <input type="submit" value='Submit' onClick={handleSubmit}/>
             </div>
         </div>
@@ -70,7 +110,6 @@ export const SignUp: React.FC<ContactProps> = ({ users, createUser, makeActiveUs
 }
 
 const mapStateToProps = (state: AppState) => {
-    console.log('state', state);
     return {
         users: state.listOfUsers
     }
