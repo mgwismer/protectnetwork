@@ -26,7 +26,7 @@ function App() {
             Welcome to ProShield
           </div>
           <div className='App-header-logo'>
-            <img width='16px' src={logo} alt='logo'/>
+            <img width='20px' src={logo} alt='logo'/>
           </div>
         </div>
         <Router>
