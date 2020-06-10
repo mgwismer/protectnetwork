@@ -5,10 +5,9 @@ import { AppState } from '../../redux/reducer';
 import { connect } from 'react-redux';
 
 export const FrontPage: React.FC<ContactProps> = ({ residents, contacts }) => {
-    console.log('residents, contacts', residents, contacts);
+
     return (
         <div>
-            <h2> Welcome to ProShield </h2>
             <div className='frontpage-buttons'>
             <button className='frontpage-buttons__create'>
                 <NavLink to={'/NewResident'} style={{color: 'black', textDecoration: 'none', border: '0px'}}>
