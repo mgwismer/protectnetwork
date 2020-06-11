@@ -1,10 +1,15 @@
 import React, { useState, useCallback } from 'react';
+import { AppState } from '../../redux/reducer';
+import { Dispatch, AnyAction, bindActionCreators } from 'redux';
+import { makeActiveUser } from '../../redux/actions';
+import { connect } from 'react-redux';
+import './signin.scss';
 
-export const SignIn: React.FC = () => {
+export const SignIn: React.FC<ContactProps> = ({ listOfUsers, users }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleNameChange = useCallback(e => {
+    const handleUsernameChange = useCallback(e => {
         setUsername(e.target.value);
     }, []);
 
@@ -12,20 +17,53 @@ export const SignIn: React.FC = () => {
         setPassword(e.target.value);
     }, [])
 
-    return (
-        <div className='signin-page'>
-            <div className='signin-page-username'>
-                <label>
-                    <input type='text' value={username} onChange={handleNameChange} />
-                </label>
-            </div>
+    const handleSubmit = useCallback(() => {
+        if (listOfUsers.includes(username)) {
+            const { password: userPassword } = users[username];
+            if (password === userPassword ) {
+                makeActiveUser(username)
+            } else {
+                alert('Incorrect Password')
+            }
+        } else {
+            alert('No user by that user name')
+        }
+    },[users, listOfUsers])
 
-            <div className='signin-page-password'>
-                <label>
-                    <input type='text' value={password} onChange={handlePasswordChange} />
-                </label>
-            </div>
+    return (        
+    <div className='signin-container'>
+        <div className='signin-input'>
+            <label>
+                Username
+            </label>
+            <input type='text' value={username} onChange={handleUsernameChange} />
         </div>
+        <div className='signin-input'>
+            <label>
+                password
+            </label>
+            <input type='text' value={password} onChange={handlePasswordChange} />
+        </div>
+        <div className='signin-submit'>
+            <input type="submit" value='Submit' onClick={handleSubmit}/>
+        </div>
+    </div>
     )
-
 }
+
+const mapStateToProps = (state: AppState) => {
+    return {
+        listOfUsers: state.listOfUsers,
+        users: state.users
+    }
+}
+
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
+    bindActionCreators({ makeActiveUser }, dispatch);
+
+type ContactProps = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(SignIn)

@@ -1,0 +1,32 @@
+.App-header {
+    background-color: #282c34;
+    min-height: 10vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+  }
+  .App-header-text {
+    margin-left: 10px;
+  }
+  
+  .App-header-nav-buttons {
+    display: flex;
+    flex-direction: row;
+    margin-left: auto;
+    button {
+      color: white;
+      background-color: #282c34;
+    }
+  }
+
+  .App-header-btn {
+      background-color: #282c34;
+  }
+
+  .App-header-logo {
+    margin-left: 10px;
+    margin-top: 3px;
+  }

@@ -19,8 +19,14 @@ export function addContact(activeUser: string, listOfContacts: Array<FirstContac
 
 export function makeActiveUser(username: string): ReduxActions {
     return {
-        type: ReduxActionTypes.MAKE_ACTIVE_USER,
+        type: ReduxActionTypes.MAKE_USER_ACTIVE,
         data: username
+    }
+}
+
+export function deactivateUser(): ReduxActions {
+    return {
+        type: ReduxActionTypes.MAKE_USER_INACTIVE
     }
 }
 

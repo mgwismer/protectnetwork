@@ -17,10 +17,11 @@ export const SignUp: React.FC<ContactProps> = ({ users, createUser, makeActiveUs
     const [userSubmitted, setUserSubmitted] = useState(false);
 
     const handleUsernameChange = useCallback(e => {
-        console.log('users in name change', users);
         setUsername(e.target.value);
         if (!users.includes(e.target.value)) {
             setUsernameValid(true);
+        } else {
+            alert('user name already exists');
         };
     }, [users]);
 

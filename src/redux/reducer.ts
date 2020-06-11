@@ -1,6 +1,5 @@
 import { ReduxActionTypes } from './action-types';
 import { ResidentType, UserType, FirstContactType } from '../models/data-models';
-import { string } from 'prop-types';
 
 export interface AppState {
     residents: Array<ResidentType>;
@@ -11,6 +10,10 @@ export interface AppState {
 
 interface ReduxBaseAction {
     type: ReduxActionTypes;
+}
+
+interface ReduxMakeUserInactive extends ReduxBaseAction {
+    type: ReduxActionTypes.MAKE_USER_INACTIVE;
 }
 
 interface ReduxAddResident extends ReduxBaseAction {
@@ -29,7 +32,7 @@ interface ReduxAddContactToResident extends ReduxBaseAction {
 }
 
 interface ReduxMakeActiveUser extends ReduxBaseAction {
-    type: ReduxActionTypes.MAKE_ACTIVE_USER;
+    type: ReduxActionTypes.MAKE_USER_ACTIVE;
     data: string;
 }
 
@@ -44,7 +47,8 @@ export type ReduxActions =
     ReduxAddContact | 
     ReduxAddContactToResident | 
     ReduxMakeActiveUser | 
-    ReduxCreateUser;
+    ReduxCreateUser |
+    ReduxMakeUserInactive;
 
 export const InitialState: AppState = {
     residents: [],
@@ -72,9 +76,11 @@ export function rootReducer(
             const newUser = action.data.username;
             const newUsersList = [...state.listOfUsers, newUser];
             const newUsers = {...state.users, [newUser]: action.data.user};
-            return {...state, users: newUsers, listOfUsers: newUsersList};
-        case ReduxActionTypes.MAKE_ACTIVE_USER:
+            return {...state, users: newUsers, listOfUsers: newUsersList}
+        case ReduxActionTypes.MAKE_USER_ACTIVE:
             return {...state, activeUser: action.data};
+        case ReduxActionTypes.MAKE_USER_INACTIVE:
+            return {...state, activeUser: ''}
         case ReduxActionTypes.ADD_CONTACT_TO_RESIDENT:
             const activeResident = state.residents.findIndex(resident => resident.id === action.data.residentId);
             const updatedResident = state.residents[activeResident]
