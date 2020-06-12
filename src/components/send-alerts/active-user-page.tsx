@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const SendAlertToContacts: React.FC = () => {
+export const UsersPage: React.FC = () => {
     return (
         <div> 
             Send To contacts page

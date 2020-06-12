@@ -20,7 +20,6 @@ export const NewContact: React.FC<ContactProps> = ({ activeUser, addContact }) =
         const [contactInputType, setContactInputType] = useState<FirstContactFieldType>('name');
 
         const handleSubmit = useCallback((e) => {
-            console.log('submit', listOfContacts)
             e.preventDefault();
             addContact(activeUser, listOfContacts);
         }, [listOfContacts]);
