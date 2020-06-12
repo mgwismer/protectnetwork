@@ -53,6 +53,18 @@ export const NewContact: React.FC<ContactProps> = ({ activeUser, addContact }) =
             }
         }, []);
 
+        const removeContact = useCallback(() => {
+            let newArray = listOfContacts;
+            console.log('remove list of contacts', newArray)
+            if (document.activeElement && document.activeElement.tagName === 'INPUT') {
+                const contactIndex = parseInt((document.activeElement as HTMLInputElement).name.split(':')[1])
+                newArray.splice(contactIndex, 1);
+                console.log('new array', contactIndex, newArray);
+                // setActiveInput(parseInt((document.activeElement as HTMLInputElement).name.split(':')[1]));
+            }
+            setListOfContacts([...newArray]);
+        },[listOfContacts]);
+
         const contactInputs = useMemo(() => {
             return listOfContacts.map((contact, index) => (                    
                 <div className='new-resident-form-input'>
@@ -68,6 +80,9 @@ export const NewContact: React.FC<ContactProps> = ({ activeUser, addContact }) =
                     <label>
                         Phone
                         <input type="text" name={`${'phone' as FirstContactFieldType}:${index}`} value={`${contact.phone}`} onFocus={handleOnFocus} onChange={handleFirstContactChange}/>
+                    </label>
+                    <label>
+                        <input type="button" name={`delete:${index}`} value='X' onClick={removeContact}/>
                     </label>
                 </div>
             ))
@@ -87,11 +102,6 @@ export const NewContact: React.FC<ContactProps> = ({ activeUser, addContact }) =
                     </div>
                 </div>
             </div>     
-            <button className='new-contact-home'>
-                <NavLink to={'/'} style={{color: 'black', textDecoration: 'none', border: '0px'}}>
-                    Back to Home
-                </NavLink>
-            </button>
         </React.Fragment>
     )
 }
