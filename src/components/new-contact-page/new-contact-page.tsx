@@ -1,6 +1,5 @@
 import React, { useCallback, useState, useMemo } from 'react';
 import { addContact } from '../../redux/actions';
-import { NavLink } from 'react-router-dom';
 import { FirstContactType, FirstContactFieldType } from '../../models/data-models';
 import { AppState } from '../../redux/reducer';
 import { Dispatch, AnyAction, bindActionCreators } from 'redux';
@@ -55,12 +54,9 @@ export const NewContact: React.FC<ContactProps> = ({ activeUser, addContact }) =
 
         const removeContact = useCallback(() => {
             let newArray = listOfContacts;
-            console.log('remove list of contacts', newArray)
             if (document.activeElement && document.activeElement.tagName === 'INPUT') {
                 const contactIndex = parseInt((document.activeElement as HTMLInputElement).name.split(':')[1])
                 newArray.splice(contactIndex, 1);
-                console.log('new array', contactIndex, newArray);
-                // setActiveInput(parseInt((document.activeElement as HTMLInputElement).name.split(':')[1]));
             }
             setListOfContacts([...newArray]);
         },[listOfContacts]);
@@ -109,7 +105,7 @@ export const NewContact: React.FC<ContactProps> = ({ activeUser, addContact }) =
 
 const mapStateToProps = (state: AppState) => {
     return {
-        activeUser: state.activeUser
+        activeUser: state.activeUser,
     }
 }
 

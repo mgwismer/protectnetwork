@@ -18,6 +18,7 @@ export function addContact(activeUser: string, listOfContacts: Array<FirstContac
 }
 
 export function makeActiveUser(username: string): ReduxActions {
+    console.log('make active user called');
     return {
         type: ReduxActionTypes.MAKE_USER_ACTIVE,
         data: username
