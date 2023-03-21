@@ -44,7 +44,7 @@ type foundResidentType = {
     home: string;
 }
 
-export const ExistingResident: React.FC<ContactProps> = ({ residents, contacts }) => {
+export const ExistingResident: React.FC<ContactProps> = ({ activeUser, residents, contacts }) => {
     const [searchResident, changeResident] = useState<OptionType>({value: '', label: ''})
     const [foundResidentId, changeFoundResidentId] = useState('');
     const [foundResident, changeFoundResident] = useState<foundResidentType>({name: '', home: ''});
@@ -53,7 +53,7 @@ export const ExistingResident: React.FC<ContactProps> = ({ residents, contacts }
     
     const ResidentOptions = useMemo(() => {
         return residents.map((resident: { id: string; name: any; residence: any; }) => ({value: resident.id, label: `${resident.name} , ${resident.residence}`}))
-    }, []);
+    }, [residents]);
 
     const handleResidentChange = useCallback((inputTerm) => {
         console.log('inp', inputTerm, residents);
@@ -66,17 +66,21 @@ export const ExistingResident: React.FC<ContactProps> = ({ residents, contacts }
         const foundResident = residents.filter((resident: { id: string; }) => searchResident.value === resident.id).map((resident: { name: string; residence: string; }) => ({name: resident.name, home: resident.residence}));
         console.log('found', foundResident[0]);
         changeFoundResident(foundResident[0])
-    }, [searchResident])
+    }, [searchResident, residents])
 
     //TODO fix since contacts became an object map
     const ContactOptions = useMemo(() => {
-        return [];
-        // return contacts.map((contact: { email: string; }) => ({value: contact.email, label: contact.email}));
-    }, []);
+    
+        // eslint-disable-next-line no-labels, @typescript-eslint/no-unused-expressions
+        const result =  Object.keys(contacts).map(contact => ({value: contacts[contact].name, label: contacts[contact].email}));
+        return result
+
+        // return contactMap.map((contact: { email: string; }) => ({value: contact.email, label: contact.email}));
+    }, [contacts]);
 
     const handleContactChange = useCallback((inputTerm) => {
         changeContact(inputTerm);
-      },[residents]);
+      },[]);
 
     const handleContactSubmit = useCallback(() => {
         console.log('contact submit', searchContact);
@@ -142,6 +146,7 @@ export const ExistingResident: React.FC<ContactProps> = ({ residents, contacts }
 }
 
 const mapStateToProps = (state: AppState) => ({
+    activeUser: state.activeUser,
     residents: state.residents,
     contacts: state.users
 })

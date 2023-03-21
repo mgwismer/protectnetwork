@@ -21,7 +21,7 @@ export const NewContact: React.FC<ContactProps> = ({ activeUser, addContact }) =
         const handleSubmit = useCallback((e) => {
             e.preventDefault();
             addContact(activeUser, listOfContacts);
-        }, [listOfContacts]);
+        }, [listOfContacts, activeUser, addContact]);
     
         const handleFirstContactChange = useCallback((e) => {
             const newArray = [...listOfContacts];

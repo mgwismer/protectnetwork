@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import './front-page.scss';
 import { NavLink } from 'react-router-dom';
 import { AppState } from '../../redux/reducer';

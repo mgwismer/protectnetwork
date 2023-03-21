@@ -11,7 +11,7 @@ export const AppHeader: React.FC<ContactProps> = ({ activeUser, deactivateUser }
     console.log('active user', activeUser);
     const handleLogout = useCallback(() => {
         deactivateUser()
-    },[]);
+    },[deactivateUser]);
     
     return (
         <div className='App-header'>
